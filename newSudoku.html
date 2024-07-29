@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>Sudoku</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/mainCSS.css">
+    <style>
+        body{
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #container{
+            height: 85vh;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+            position: relative;
+            -webkit-user-select: none;
+        }
+        .btn{
+            height:30px;
+            width:100px;
+            border:2px solid grey;
+            text-align: center;
+            padding-top: 5px;
+        }
+        #index{
+            width: 70%;
+            height: 100%;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0,0,100,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        #number-selector{
+            width: 70%;
+            height: 100%;
+            background-color: white;
+            justify-self: right;
+            box-shadow: 0 0 5px rgba(0,0,100,0.1);
+        }
+        #SudokuMain{
+            height:60vh;
+            aspect-ratio:1/1;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns:1fr 1fr 1fr;
+            grid-template-rows:auto;
+            justify-self: center;
+        }
+        .subBlock{
+            border:1px solid black;
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            grid-template-rows:1fr 1fr 1fr;
+        }
+        .minBlock{
+            border:0.5px solid black;
+            display:grid;
+            justify-items:center;
+            align-items: center;
+        }
+        .minBlock:hover{
+            transform:scale(1.5);
+            background-color:white;
+            transition:transform 0.2s;
+        }
+        header{
+            display:block;
+            width:100%;
+            height:15vh;
+            background-color:lightskyblue;
+            font-size:calc(10px + 2vw);
+            align-content: center;
+            text-align: center;
+            font-family: "微軟正黑體 Light", serif;
+            color:blanchedalmond;
+            -webkit-user-select: none;
+        }
+    </style>
+</head>
+<body>
+<header>数独小游戏</header>
+<div id="container">
+    <div id="index">
+        <div class="btn" id="btn1">生成数独</div>
+        <div class="btn" id="btn2">显示答案</div>
+    </div>
+    <div id="SudokuMain">
+        <div class="subBlock part1">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part2">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part3">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part4">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part5">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part6">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part7">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part8">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+        <div class="subBlock part9">
+            <div class="minBlock block1"></div>
+            <div class="minBlock block2"></div>
+            <div class="minBlock block3"></div>
+            <div class="minBlock block4"></div>
+            <div class="minBlock block5"></div>
+            <div class="minBlock block6"></div>
+            <div class="minBlock block7"></div>
+            <div class="minBlock block8"></div>
+            <div class="minBlock block9"></div>
+        </div>
+    </div>
+    <div id="number-selector" >
+    </div>
+</div>
+</body>
+</html>
+<script>
+    class Sudoku {
+
+        constructor() {
+            this.digits = this.blankMatrix(9);
+        }
+
+        blankMatrix(size) {
+            let newMatrix = [];
+            for (let i = 0;i < size;i ++) {
+                newMatrix.push([]);
+            }
+            return newMatrix;
+        }
+
+        makeDigits() {
+            let colLists = this.blankMatrix(9);
+            let areaLists = this.blankMatrix(3);
+            let nine = this.randNine();
+            let i = 0,
+                j = 0,
+                areaIndex = 0,
+                count = 0,
+                error = false,
+                first = 0;
+            for (i = 0;i < 9;i ++) {
+                colLists[i].push(nine[i]);
+            }
+            areaLists[0] = nine.slice(0, 3);
+            areaLists[1] = nine.slice(3, 6);
+            areaLists[2] = nine.slice(6);
+
+            for (i = 0;i < 8;i ++) {
+                nine = this.randNine();
+                if (i % 3 == 2) {
+                    areaLists = this.blankMatrix(3);
+                }
+
+                for (j = 0;j < 9;j ++) {
+                    areaIndex = Math.floor(j / 3);
+                    count = 0;
+                    error = false;
+                    while (colLists[j].includes(nine[0]) || areaLists[areaIndex].includes(nine[0])) {
+                        if (++count >= nine.length) {
+                            error = true;
+                            break;
+                        }
+                        nine.push(nine.shift());
+                    }
+                    if (error) return false;
+                    first = nine.shift();
+                    colLists[j].push(first);
+                    areaLists[areaIndex].push(first);
+                }
+            }
+            this.digits = colLists;
+            return true;
+        }
+
+        randNine() {
+            const nine = this.nine();
+            let index = 0;
+
+            for (let i = 0;i < 5;i ++) {
+                index = this.randIndex();
+                [nine[0], nine[index]] = [nine[index], nine[0]];
+            }
+
+            return nine;
+        }
+
+        nine() {
+            return [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        }
+
+        randIndex() {
+            return Math.floor(Math.random() * 9);
+        }
+    }
+
+    function getRandomInt(n) {
+        return Math.floor(Math.random() * n);
+    }
+
+    var AllSudoku = new Sudoku();
+
+    const btn1 = document.querySelector("#btn1");
+    const btn2 = document.querySelector("#btn2");
+
+    btn1.addEventListener("click",function() {
+        let hard = prompt("请输入数独的难度：","20")
+        window.sudoku = AllSudoku
+        const start = Date.now();
+        while (! sudoku.makeDigits());
+        const end = Date.now();
+        console.log(end - start);
+        for (let i = 1; i <= 9; i ++) {
+            for(let j = 1; j <= 9; j ++) {
+                let block = `.part${i} .block${j}`
+                let dom = document.querySelector(block)
+                dom.innerText = sudoku.digits[i-1][j-1];
+                dom.style.color="black";
+                dom.style.fontWeight="normal";
+            }
+        }
+        let basic = 20;
+        basic += hard * 4
+        for(let i = 0;i < basic;i++){
+            let row = getRandomInt(10);
+            let col = getRandomInt(10);
+            let block = `.part${row} .block${col}`
+            let spaceBlock = document.querySelector(block)
+            if (spaceBlock) {
+                spaceBlock.innerText = '';
+            }
+        }
+    })
+
+    btn2.addEventListener("click", function() {
+        for (let i = 1; i <= 9; i ++) {
+            for(let j = 1; j <= 9; j ++) {
+                let block = `.part${i} .block${j}`
+                let dom = document.querySelector(block)
+                dom.innerText = sudoku.digits[i-1][j-1];
+            }
+        }
+    })
+
+    let subBlock = document.querySelector("#SudokuMain")
+    subBlock.addEventListener("click", function(e) {
+        let row = e.target.parentNode.getAttribute("class")
+        let col = e.target.getAttribute('class')
+        let input = prompt("请输入要输入的数字")
+        let block = `.part${row[row.length-1]} .block${col[col.length-1]}`
+        let output = document.querySelector(block)
+        output.innerText = input;
+        output.style.color="orange";
+        output.style.fontWeight = "bold";
+
+        let count = 0;
+        for (let i = 1; i <= 9; i ++) {
+            for(let j = 1; j <= 9; j ++) {
+                let block = `.part${i} .block${j}`
+                let dom = document.querySelector(block)
+                if(dom.innerText[0] == sudoku.digits[i-1][j-1]){
+                    count++;
+                }
+            }
+        }
+        console.log(count);
+        if(count === 81){
+            alert("完全正确喵！")
+            window.location.reload();
+        }
+    })
+</script>
