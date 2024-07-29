@@ -1,0 +1,77 @@
+body{
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+#container{
+    height: 85vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    position: relative;
+    -webkit-user-select: none;
+}
+.btn{
+    height:30px;
+    width:100px;
+    border:2px solid grey;
+    text-align: center;
+    padding-top: 5px;
+}
+#index{
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,100,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#number-selector{
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    justify-self: right;
+    box-shadow: 0 0 5px rgba(0,0,100,0.1);
+}
+#SudokuMain{
+    height:60vh;
+    aspect-ratio:1/1;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:auto;
+    justify-self: center;
+}
+.subBlock{
+    border:1px solid black;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr;
+}
+.minBlock{
+    border:0.5px solid black;
+    display:grid;
+    justify-items:center;
+    align-items: center;
+}
+.minBlock:hover{
+    transform:scale(1.5);
+    background-color:white;
+    transition:transform 0.2s;
+}
+header{
+    display:block;
+    width:100%;
+    height:15vh;
+    background-color:lightskyblue;
+    font-size:calc(10px + 2vw);
+    align-content: center;
+    text-align: center;
+    font-family: "微軟正黑體 Light", serif;
+    color:blanchedalmond;
+    -webkit-user-select: none;
+}
