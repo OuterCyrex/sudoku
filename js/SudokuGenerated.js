@@ -81,23 +81,49 @@ function getRandomInt(n) {
     return Math.floor(Math.random() * n);
 }
 
-var AllSudoku = new Sudoku();
+
 
 const btn1 = document.querySelector("#btn1");
 const btn2 = document.querySelector("#btn2");
 
+var AllSudoku = new Sudoku();
+while (! AllSudoku.makeDigits());
+window.sudoku = AllSudoku;
+
+function transToSudoku(AllSudoku){
+    console.log(AllSudoku);
+    var Grid = []
+    for (let i = 0; i < 9; i++) {
+        Grid[i] = AllSudoku.digits[i].slice();
+    }
+    let count = 0;
+    let st1 = 0;
+    let st2 = 0;
+    for(let k= 0; k < 9 ; k ++){
+        for (let i = st1; i < st1 + 3; i++) {
+            for (let j = st2; j < st2 + 3; j++) {
+                Grid[k][count++] = AllSudoku.digits[i][j];
+            }
+        }
+        st2 += 3;
+        if(st2 > 8){
+            st2 = 0;
+            st1 += 3;
+        }
+        count = 0;
+    }
+    return Grid
+}
+
+var TrueMatrix = transToSudoku(window.sudoku);
+
 btn1.addEventListener("click",function() {
     let hard = prompt("请输入数独的难度：","20")
-    window.sudoku = AllSudoku
-    const start = Date.now();
-    while (! sudoku.makeDigits());
-    const end = Date.now();
-    console.log(end - start);
     for (let i = 1; i <= 9; i ++) {
         for(let j = 1; j <= 9; j ++) {
             let block = `.part${i} .block${j}`
             let dom = document.querySelector(block)
-            dom.innerText = sudoku.digits[i-1][j-1];
+            dom.innerText = TrueMatrix[i-1][j-1];
             dom.style.color="black";
             dom.style.fontWeight="normal";
         }
@@ -115,14 +141,16 @@ btn1.addEventListener("click",function() {
     }
 })
 
+
 btn2.addEventListener("click", function() {
     for (let i = 1; i <= 9; i ++) {
         for(let j = 1; j <= 9; j ++) {
             let block = `.part${i} .block${j}`
             let dom = document.querySelector(block)
-            dom.innerText = sudoku.digits[i-1][j-1];
+            dom.innerText = TrueMatrix[i-1][j-1];
         }
     }
+    console.log(TrueMatrix)
 })
 
 let subBlock = document.querySelector("#SudokuMain")
@@ -141,7 +169,7 @@ subBlock.addEventListener("click", function(e) {
         for(let j = 1; j <= 9; j ++) {
             let block = `.part${i} .block${j}`
             let dom = document.querySelector(block)
-            if(dom.innerText[0] == sudoku.digits[i-1][j-1]){
+            if(dom.innerText[0] == TrueMatrix[i-1][j-1]){
                 count++;
             }
         }
