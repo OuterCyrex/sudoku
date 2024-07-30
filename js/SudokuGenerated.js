@@ -118,7 +118,9 @@ function transToSudoku(AllSudoku){
 var TrueMatrix = transToSudoku(window.sudoku);
 
 btn1.addEventListener("click",function() {
-    let hard = prompt("请输入数独的难度：","20")
+    const left = document.querySelector("#left .number")
+    left.innerText = "-";
+    let hard = prompt("请输入数独的难度：","10")
     for (let i = 1; i <= 9; i ++) {
         for(let j = 1; j <= 9; j ++) {
             let block = `.part${i} .block${j}`
@@ -139,18 +141,35 @@ btn1.addEventListener("click",function() {
             spaceBlock.innerText = '';
         }
     }
+    window.startTime = new Date().getTime();
 })
 
+const clock = document.querySelector("#clock .number");
+setInterval(function () {
+   let timer = new Date().getTime();
+   let seconds = (timer - window.startTime) / 1000;
+   let minuteTime = parseInt((seconds / 60)).toString().padStart(2, "0").padStart(2, "0");
+   let secondTime = parseInt(seconds % 60).toString().padStart(2, "0");
+    if(window.startTime!==undefined){
+        clock.innerText = minuteTime + ":" + secondTime;
+    }else{
+        clock.innerText = "--:--";
+    }
+   }, 1000)
 
 btn2.addEventListener("click", function() {
-    for (let i = 1; i <= 9; i ++) {
-        for(let j = 1; j <= 9; j ++) {
-            let block = `.part${i} .block${j}`
-            let dom = document.querySelector(block)
-            dom.innerText = TrueMatrix[i-1][j-1];
+    modalAlert("确定要显示答案么？",function(flag){
+        if(flag){
+            for (let i = 1; i <= 9; i ++) {
+                for(let j = 1; j <= 9; j ++) {
+                    let block = `.part${i} .block${j}`
+                    let dom = document.querySelector(block)
+                    dom.innerText = TrueMatrix[i-1][j-1];
+                }
+            }
+            console.log(TrueMatrix)
         }
-    }
-    console.log(TrueMatrix)
+    })
 })
 
 let subBlock = document.querySelector("#SudokuMain")
@@ -174,10 +193,46 @@ subBlock.addEventListener("click", function(e) {
             }
         }
     }
+    const left = document.querySelector("#left .number")
+    left.innerText = 81 - count;
     console.log(count);
     if(count === 81){
-        alert("完全正确喵！")
-        window.location.reload();
+        const confirm = document.querySelector(".Confirm");
+        confirm.style.display = "none";
+        modalAlert("完全正确喵！")
+        setTimeout(function (){
+            confirm.style.display="flex";
+            modalAlert("是否重新开始呢？", function (flag) {
+                if (flag) {
+                    window.location.reload();
+                }
+            })
+        },2000)
     }
 })
 
+let btn3 = document.querySelector("#btn3");
+btn3.addEventListener("click",function() {
+    modalAlert("确定要重新开始么？",function(flag){
+        if(flag){
+            window.location.reload();
+        }
+    })
+})
+
+function modalAlert(text,callback){
+    const modal = document.querySelector("#modal")
+    modal.style.display = "grid"
+    const alertText = document.querySelector(".text");
+    alertText.innerHTML = text;
+    const confirm = document.querySelector(".Confirm .yes");
+    const cancel = document.querySelector(".Confirm .no");
+    confirm.addEventListener("click", function(){
+        modal.style.display = "none";
+        callback(true)
+    })
+    cancel.addEventListener("click", function(){
+        modal.style.display = "none";
+        callback(false)
+    })
+}

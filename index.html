@@ -11,6 +11,7 @@
     <div id="index">
         <div class="btn" id="btn1">生成数独</div>
         <div class="btn" id="btn2">显示答案</div>
+        <div class="btn" id="btn3">重新开始</div>
     </div>
     <div id="SudokuMain">
     <div class="subBlock part1">
@@ -114,8 +115,27 @@
     </div>
     </div>
     <div id="number-selector" >
+        <div id="num-container">
+            <div id="clock">
+                本局已经使用的时间
+                <div class="number">--:--</div>
+            </div>
+            <div id="left">剩余未匹配成功的格子
+            <div class="number">-</div>
+            </div>
+        </div>
     </div>
 </div>
+<div id="modal">
+    <div id="alert">
+        <div class="text"></div>
+        <div class="Confirm">
+            <button class="yes">是</button>
+            <button class="no">否</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 <script src="js/SudokuGenerated.js" type="module"></script>
