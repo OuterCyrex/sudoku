@@ -120,28 +120,31 @@ var TrueMatrix = transToSudoku(window.sudoku);
 btn1.addEventListener("click",function() {
     const left = document.querySelector("#left .number")
     left.innerText = "-";
-    let hard = prompt("请输入数独的难度：","10")
-    for (let i = 1; i <= 9; i ++) {
-        for(let j = 1; j <= 9; j ++) {
-            let block = `.part${i} .block${j}`
-            let dom = document.querySelector(block)
-            dom.innerText = TrueMatrix[i-1][j-1];
-            dom.style.color="black";
-            dom.style.fontWeight="normal";
+    let difficulty = 0
+    difficultySelect(function (difficulty){
+        for (let i = 1; i <= 9; i++) {
+            for (let j = 1; j <= 9; j++) {
+                let block = `.part${i} .block${j}`
+                let dom = document.querySelector(block)
+                dom.innerText = TrueMatrix[i - 1][j - 1];
+                dom.style.color = "black";
+                dom.style.fontWeight = "normal";
+            }
         }
-    }
-    let basic = 20;
-    basic += hard * 4
-    for(let i = 0;i < basic;i++){
-        let row = getRandomInt(10);
-        let col = getRandomInt(10);
-        let block = `.part${row} .block${col}`
-        let spaceBlock = document.querySelector(block)
-        if (spaceBlock) {
-            spaceBlock.innerText = '';
+        let basic = 20;
+        basic += difficulty * 4
+        for (let i = 0; i < basic; i++) {
+            let row = getRandomInt(10);
+            let col = getRandomInt(10);
+            let block = `.part${row} .block${col}`
+            let spaceBlock = document.querySelector(block)
+            if (spaceBlock) {
+                spaceBlock.innerText = '';
+            }
         }
-    }
-    window.startTime = new Date().getTime();
+        window.startTime = new Date().getTime();
+    })
+
 })
 
 const clock = document.querySelector("#clock .number");
@@ -223,16 +226,45 @@ btn3.addEventListener("click",function() {
 function modalAlert(text,callback){
     const modal = document.querySelector("#modal")
     modal.style.display = "grid"
+    const alert = document.querySelector("#alert")
+    alert.style.display = "flex";
     const alertText = document.querySelector(".text");
     alertText.innerHTML = text;
     const confirm = document.querySelector(".Confirm .yes");
     const cancel = document.querySelector(".Confirm .no");
     confirm.addEventListener("click", function(){
         modal.style.display = "none";
+        alert.style.display = "none";
         callback(true)
     })
     cancel.addEventListener("click", function(){
         modal.style.display = "none";
+        alert.style.display = "none";
         callback(false)
+    })
+}
+
+function difficultySelect(callback){
+    const modal = document.querySelector("#modal")
+    modal.style.display = "grid";
+    const Start = document.querySelector("#Start");
+    Start.style.display = "flex";
+    const easy = document.querySelector(".easy");
+    const normal = document.querySelector(".normal");
+    const hard  = document.querySelector(".hard");
+    easy.addEventListener("click",function(){
+        modal.style.display = "none";
+        Start.style.display = "none";
+        callback(0)
+    })
+    normal.addEventListener("click",function(){
+        modal.style.display = "none";
+        Start.style.display = "none";
+        callback(10)
+    })
+    hard.addEventListener("click",function(){
+        modal.style.display = "none";
+        Start.style.display = "none";
+        callback(20)
     })
 }

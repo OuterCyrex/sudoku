@@ -123,7 +123,7 @@ header{
     width:30vw;
     background-color:white;
     border-radius:20px;
-    display:flex;
+    display:none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -161,3 +161,39 @@ header{
     text-align: center;
     border-radius: 10px;
 }
+#Start{
+    height:30vh;
+    width:30vw;
+    background-color:white;
+    border-radius:20px;
+    display:none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#Start .Select{
+    height:80%;
+    width:30vw;
+    background-color:white;
+    border-radius:20px;
+    margin:5% 0;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.difficulty{
+    height:20%;
+    width:80%;
+}
+.easy{
+    background-color:lawngreen;
+}
+.normal{
+    background-color:yellow;
+}
+.hard{
+    background-color:red;
+}
+
+
