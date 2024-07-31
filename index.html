@@ -6,14 +6,34 @@
     <link rel="stylesheet" href="css/mainCSS.css">
 </head>
 <body>
-<header>Outer的数独谜团</header>
+<header>
+    OuterCyrex の
+    <span style="color:grey;border-radius: 5px;border:2px solid lightseagreen;padding: 5px;background-color: #aff8e4">数独谜题</span>
+</header>
 <div id="container">
+    <div id="OuterNum">
+    <div id="whichNum">
+    <button class="num num1">1</button>
+    <button class="num num2">2</button>
+    <button class="num num3">3</button>
+    <button class="num num4">4</button>
+    <button class="num num5">5</button>
+    <button class="num num6">6</button>
+    <button class="num num7">7</button>
+    <button class="num num8">8</button>
+    <button class="num num9">9</button>
+    </div>
+    </div>
     <div id="index">
+        <span style="color:#c20cff;width:60%;align-self:center;text-align:center;font-size: calc(10px + 2vw);font-family: 'Yu Gothic',sans-serif">Menu</span>
+        <div id="menuContainer">
         <div class="btn" id="btn1">生成数独</div>
         <div class="btn" id="btn2">显示答案</div>
         <div class="btn" id="btn3">重新开始</div>
+        </div>
     </div>
     <div id="SudokuMain">
+
     <div class="subBlock part1">
         <div class="minBlock block1"></div>
         <div class="minBlock block2"></div>
@@ -117,10 +137,11 @@
     <div id="number-selector" >
         <div id="num-container">
             <div id="clock">
-                本局已经使用的时间
-                <div class="number">--:--</div>
+                <span style="color:#0a8e8a;width:60%;align-self:center;text-align:center;font-size: calc(10px + 1vw);">本局已经使用的时间</span>
+                <div class="number">-- : --</div>
             </div>
-            <div id="left">剩余未匹配成功的格子
+            <div id="left">
+                <span style="color:#0a8e8a;width:60%;align-self:center;text-align:center;font-size: calc(10px + 1vw);">剩余未匹配的格子</span>
             <div class="number">-</div>
             </div>
         </div>
@@ -129,6 +150,7 @@
 <div id="modal">
     <div id="alert">
         <div class="text"></div>
+        <div class="text subText"></div>
         <div class="Confirm">
             <button class="yes">是</button>
             <button class="no">否</button>

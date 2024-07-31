@@ -148,17 +148,19 @@ btn1.addEventListener("click",function() {
 })
 
 const clock = document.querySelector("#clock .number");
-setInterval(function () {
-   let timer = new Date().getTime();
-   let seconds = (timer - window.startTime) / 1000;
-   let minuteTime = parseInt((seconds / 60)).toString().padStart(2, "0").padStart(2, "0");
-   let secondTime = parseInt(seconds % 60).toString().padStart(2, "0");
+function windowClock() {
+    let timer = new Date().getTime();
+    let seconds = (timer - window.startTime) / 1000;
+    let minuteTime = parseInt((seconds / 60)).toString().padStart(2, "0").padStart(2, "0");
+    let secondTime = parseInt(seconds % 60).toString().padStart(2, "0");
     if(window.startTime!==undefined){
-        clock.innerText = minuteTime + ":" + secondTime;
+        clock.innerText = minuteTime + " : " + secondTime;
+        window.clock = clock.innerText;
     }else{
-        clock.innerText = "--:--";
+        clock.innerText = "-- : --";
     }
-   }, 1000)
+}
+var thisClock = setInterval(windowClock, 1000)
 
 btn2.addEventListener("click", function() {
     modalAlert("确定要显示答案么？",function(flag){
@@ -179,39 +181,46 @@ let subBlock = document.querySelector("#SudokuMain")
 subBlock.addEventListener("click", function(e) {
     let row = e.target.parentNode.getAttribute("class")
     let col = e.target.getAttribute('class')
-    let input = prompt("请输入要输入的数字")
-    let block = `.part${row[row.length-1]} .block${col[col.length-1]}`
+    let block = `.part${row[row.length - 1]} .block${col[col.length - 1]}`
     let output = document.querySelector(block)
-    output.innerText = input;
-    output.style.color="orange";
-    output.style.fontWeight = "bold";
-
-    let count = 0;
-    for (let i = 1; i <= 9; i ++) {
-        for(let j = 1; j <= 9; j ++) {
-            let block = `.part${i} .block${j}`
-            let dom = document.querySelector(block)
-            if(dom.innerText[0] == TrueMatrix[i-1][j-1]){
-                count++;
+    ChooseNum(function(input){
+        output.innerText = input;
+        output.style.color = "#ec4e4e";
+        output.style.fontWeight = "bold";
+        const whichNum = document.querySelector("#whichNum")
+        whichNum.style.display = "none";
+        let count = 0;
+        for (let i = 1; i <= 9; i ++) {
+            for(let j = 1; j <= 9; j ++) {
+                let block = `.part${i} .block${j}`
+                let dom = document.querySelector(block)
+                if(dom.innerText[0] == TrueMatrix[i-1][j-1]){
+                    count++;
+                }
             }
         }
-    }
-    const left = document.querySelector("#left .number")
-    left.innerText = 81 - count;
-    console.log(count);
-    if(count === 81){
-        const confirm = document.querySelector(".Confirm");
-        confirm.style.display = "none";
-        modalAlert("完全正确喵！")
-        setTimeout(function (){
-            confirm.style.display="flex";
-            modalAlert("是否重新开始呢？", function (flag) {
-                if (flag) {
-                    window.location.reload();
-                }
-            })
-        },2000)
-    }
+        const left = document.querySelector("#left .number")
+        left.innerText = 81 - count;
+        console.log(count);
+        if(count === 81){
+            clearInterval(thisClock)
+            const confirm = document.querySelector(".Confirm");
+            confirm.style.display = "none";
+            modalAlert("完全正确喵！")
+            const subText = document.querySelector(".subText");
+            subText.style.display="block";
+            subText.innerText = `本次用时${window.clock}`;
+            setTimeout(function (){
+                confirm.style.display="flex";
+                subText.style.display="none";
+                modalAlert("是否重新开始呢？", function (flag) {
+                    if (flag) {
+                        window.location.reload();
+                    }
+                })
+            },3000)
+        }
+    })
 })
 
 let btn3 = document.querySelector("#btn3");
@@ -267,4 +276,20 @@ function difficultySelect(callback){
         Start.style.display = "none";
         callback(20)
     })
+}
+
+var returnNumRF = null
+
+function ChooseNum(callback){
+    const whichNum = document.querySelector("#whichNum")
+    function returnNum(e) {
+        let num = e.target.getAttribute("class")
+        callback(num[7])
+    }
+    if(returnNumRF!=null){
+        whichNum.removeEventListener("click", returnNumRF)
+    }
+    whichNum.style.display = "flex";
+    whichNum.addEventListener("click", returnNum)
+    returnNumRF = returnNum
 }
